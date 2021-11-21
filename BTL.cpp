@@ -4,8 +4,7 @@
 #include<conio.h>		//thu vien de su dung getch(); 
 #include<fstream>
 #include<windows.h>
-#include<stdlib.h>
-//#include <bits/stdc++.h> //thu vien goi tat ca cac thu vien chuan 
+
 using namespace std;
 
 class ConNguoi {								//class connguoi
@@ -22,6 +21,17 @@ class ConNguoi {								//class connguoi
 		}
 };
 
+// ham mau chu
+void textcolor(int x)
+{
+	HANDLE mau;
+	mau = GetStdHandle
+
+	(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(mau, x);
+}
+
+
 void ConNguoi::Nhap(){
 	cout << "Nhap Ho va ten: ";
 	fflush(stdin);
@@ -31,16 +41,21 @@ void ConNguoi::Nhap(){
 }
 
 void ConNguoi::Xuat(){
+
 	cout<<HoVaTen;
-	cout<<setw(20);
+	cout<<right<<setw(12);
 	cout<<GioiTinh;
-	cout<<setw(17);
+	cout<<right<<setw(30);
+	
+
 }
 
 class Diem {								//class diem
 	private:
 		float Toan,Van,Anh,dtb;
 	public:
+	
+		// tra ve dtb
 		float getDtb(){
 			return dtb;
 		};
@@ -62,6 +77,7 @@ class Diem {								//class diem
 		};
 		string getXepLoai();				
 };
+
 string Diem::getXepLoai(){
 	string ghi;
 		if(dtb>=8.0){
@@ -78,6 +94,7 @@ string Diem::getXepLoai(){
         	return ghi;
     	}
 }
+
 string Diem::XepLoai(){
 	double T = getDtb();
 	
@@ -107,12 +124,14 @@ void Diem::NhapD(){
 
 
 void Diem::XuatD(){
+	
 	cout<<Toan<<setw(10);
 	cout<<Van<<setw(10);
 	cout<<Anh<<setw(10);
 	this->Diemtb();
-	cout<<dtb<<setw(13);
-	XepLoai();	
+	cout<<dtb<<setw(16);
+	XepLoai();
+
 }
 
 
@@ -143,6 +162,7 @@ void SinhVien::Xuat() {
 
 
 //---------------------------------//
+
 class QuanLySinhVien{								
 	private:
 		vector<SinhVien*>SV;
@@ -158,6 +178,7 @@ class QuanLySinhVien{
 		void ghiFile();
 		void docFile(); 
 };
+//Ghi file
 void QuanLySinhVien::ghiFile(){
 	ofstream luufile;
 	luufile.open("C:\\Users\\nguye\\OneDrive\\Desktop\\ghifilebtl.txt",ios::out);
@@ -175,26 +196,7 @@ void QuanLySinhVien::ghiFile(){
 	cout<<"Ghi danh sach vao file thanh cong!!!";
 	luufile.close();
 }
-// //Ham doc file can public thuoc tinh va chi nhap duoc dong dau tien
-//	void QuanLySinhVien::docFile(){
-//	ifstream hienthifile;
-//	hienthifile.open("C:\\Users\\nguye\\OneDrive\\Desktop\\ghifilebtl.txt",ios::in);
-//	SinhVien *sv;
-//	//for(int i=0; i<SV.size();i++){
-//	sv=new SinhVien;
-//	hienthifile>>sv->HoVaTen;
-//	hienthifile>>sv->GioiTinh;
-//	hienthifile>>sv->MSSV;
-//	hienthifile>>sv->Toan;
-//	hienthifile>>sv->Van;
-//	hienthifile>>sv->Anh;
-//	hienthifile>>sv->dtb;
-//	SV.push_back(sv);	
-//	//}
-//	hienthifile.close();
-//	system("Pause");
-//	
-//}
+
 
 //TimKiemSinhVienTheoTen
 void QuanLySinhVien::TimKiemTen(){
@@ -209,31 +211,57 @@ void QuanLySinhVien::TimKiemTen(){
 			hienThiTenCot();
 			cout<<endl<<STT<<setw(20); 
 			SV.at(i)->Xuat();
-		}else{
-		cout<<"Khong ton tai sinh vien trong danh sach!!!";
-		}			
+			break;
+		}	
 	}
 }
+
 //XoaToanBoDanhSach
 void QuanLySinhVien::XoaDS(){
+	bool value=true;
 	SV.clear();
-	cout<<"Xoa toan bo danh sach sinh vien thanh cong !!!";
-}
+	cout<<"Ban co chac muon xoa toan bo danh sach!\n";
+	cout<<"Nhap 1 or 0: ";
+	cin>>value;
+	//kiem tra 
+	if(value==true){
+		cout<<"Ban Hay doi trong giay lat. Chuong Trinh dang xu ly!!";
+		for(int i=0;i<6;i++){
+			cout<<".";
+			Sleep(700);
+		}
+		cout<<"\n";
+		cout<<right<<"Yeu Cau xoa toan bo danh sach cua ban da hoan tat!";
+		Sleep(2800);
+		system("cls");
+	}else{	
+		cout<<"Yeu cau xoa toan bo danh sach cua ban da huy!!\n";
+		cout<<"Ban se quay lai chuong trinh trong gia lat";
+		for(int i=0;i<6;i++){
+			cout<<".";
+			Sleep(700);
+		}	
+	}
+	system("cls");
+	}
+
 //Xoa SV
 void QuanLySinhVien::XoaSV(){
 	int n;
 	XuatDS();
 	if(SV.size()==0){
-			cout<<"				Danh sach hien dang trong !!!";
+			cout<<"\t\t\t\tDanh sach hien dang trong !!!";
 	}else{		
 	cout<<endl<<"Nhap STT sinh vien can xoa: ";
 	cin>>n;
 	if(n >= SV.size() ){
 		cout<<"Khong co sinh vien tai vi tri do";
+		system("cls");
 	}else{
 	SV.erase(SV.begin()+n);
 	cout<<"Da xoa sinh vien thanh cong !!!";
 	}
+	system("cls");
 	}
 }
 
@@ -257,8 +285,9 @@ void QuanLySinhVien::SapXepD(){
 }
 
 void QuanLySinhVien::hienThiTenCot() {
-	cout<<"---------------------------------------------------------------------------------------------------------------";
-	cout<<endl<<"STT"<<setw(12)<<"HoTen"<<setw(30)<< "GioiTinh "<<setw(13)<<"MSSV"<<setw(22)<< "Toan"<<setw(9)<<"Van"<<setw(10)<< "Anh"<< setw(14)<< "DiemTBC"<<setw(10)<<"XepLoai";
+	cout<<"---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"<<endl;
+	cout<<endl<<"STT"<<setw(17)<<"HO & TEN"<<setw(20)<<"GIOI TINH "<<setw(18)<<"MSSV "<<setw(28)<<"TOAN "<<setw(9)<<"VAN "<<setw(10)<<"ANH "<<setw(14)<<"DiemTBC"<<setw(10)<<"XEPLOAI";
+
 }
 
 void QuanLySinhVien::NhapDS(){
@@ -267,6 +296,7 @@ void QuanLySinhVien::NhapDS(){
             cout<<"Nhap so luong sinh vien muon them vao danh sach: ";
             cin>>n;
             for(int i=0;i<n;i++){
+            	cout<<"\n";
             	cout<<"--- Nhap sinh vien thu "<<i+1<<" muon them vao danh sach --- "<<endl;
                 sv=new SinhVien;  	//tinh da hinh
                 sv->Nhap();			// tinh da hinh 
@@ -276,6 +306,7 @@ void QuanLySinhVien::NhapDS(){
 }
 
 void QuanLySinhVien::XuatDS(){
+			textcolor(8);
             cout<<endl<<setw(70)<<"*******Danh sach sinh vien*******"<<endl;
             hienThiTenCot();
             for(int i=0; i<this->SV.size();i++){		// so sanh voi kich thuoc phan tu cua vector      
@@ -291,20 +322,29 @@ void menu(){
 	int luachon; 
 	char sobatky; 
 	do {
-		cout<<"================= MENU ====================";
-		cout<<endl<<"1. Nhap sinh vien vao danh sach.";
-		cout<<endl<<"2. Hien thi danh sach sinh vien.";
-		cout<<endl<<"3. Sap xep theo diem trung binh giam dan.";
-		cout<<endl<<"4. Xoa sinh vien theo STT.";
-		cout<<endl<<"5. Xoa toan bo danh sach sinh vien.";
-		cout<<endl<<"6. Tim kiem sinh vien theo ten.";
-		cout<<endl<<"7. Ghi ket qua vao file.";
-		cout<<endl<<"8. Doc file.(chua hoan thien chuc nang)";
-		cout<<endl<<"0. Thoat.";        
-		cout<<"\n===============______======================"<<endl;
-		cout<<endl<<"Ban chon?:\n "; 
-		cin>>luachon; 
+		//menu da sua
 		
+		textcolor(9);
+		cout <<"\t\t===================== Quan Ly Hoc Sinh ==================="<<endl;
+		cout <<"\t\t||		1. Nhap thong tin sinh vien.		||"<<endl;
+		cout <<"\t\t||------------------------------------------------------||"<<endl;
+		cout <<"\t\t||		2. Hien thi danh sach sinh vien. 	||"<<endl;
+		cout <<"\t\t||------------------------------------------------------||"<<endl;
+		cout <<"\t\t||		3. Sap xep theo diem trung binh giam dan||"<<endl;
+		cout <<"\t\t||------------------------------------------------------||"<<endl;
+		cout <<"\t\t||		4. Xoa hoc sinh theo so thu tu.		||"<<endl;
+		cout <<"\t\t||------------------------------------------------------||"<<endl;
+		cout <<"\t\t||		5. Xoa toan bo danh sach hoc sinh	||"<<endl;
+		cout <<"\t\t||------------------------------------------------------||"<<endl;
+		cout <<"\t\t||		6. Tim kiem sinh vien theo ten.		||"<<endl;
+		cout <<"\t\t||------------------------------------------------------||"<<endl;
+		cout <<"\t\t||		7. Ghi ket qua vao file.		||"<<endl;
+		cout <<"\t\t||------------------------------------------------------||"<<endl;
+		cout <<"\t\t||		0. THOAT!!				||"<<endl;
+		cout <<"\t\t=========================================================="<<endl;
+		
+		cout <<"\t\t\t\t\nVui long chon: ";
+		cin>>luachon; 
 switch(luachon){
 			case 0:
 				exit(0);
@@ -330,22 +370,17 @@ switch(luachon){
 			case 7:
 				dssv.ghiFile();
 				break;
-//			case 8:
-//				dssv.docFile();
-//				break;
 			default:
-				cout<<"			Vui long chon lai chuc nang!!!";
+				cout<<endl;
 				break;
 		}
-		cout<<endl<<"\n\nNhan enter de tiep tuc!";
+		textcolor(15);
+		cout<<endl<<"\t\t\t\t\t---Chuc nang da thuc hien xong hoac khong co du lieu!---";
+		cout<<endl<<"\t\t\t\t\t\t---Nhan enter de tiep tuc chuong trinh!---";
 		getch(); 
 		system("cls");
 	}while(luachon);
 }
-BOOL WINAPI SetConsoleTitle(
-  _In_ LPCTSTR lpConsoleTitle
-);
 int main(){
-	SetConsoleTitle("QuanLySinhVien");
 	menu();
 };
