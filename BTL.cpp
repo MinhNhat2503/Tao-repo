@@ -176,8 +176,56 @@ class QuanLySinhVien{
 		void XoaDS();
 		void TimKiemTen();
 		void ghiFile();
-		void docFile(); 
+		void docFile();
+		void EditSV();
+		void TimKiemMSSV(); 
 };
+// Them Thong tin SV
+void QuanLySinhVien::EditSV(){
+	string ten;
+//	int tim =0;
+	textcolor(13);
+	cout<<"Nhap ten sinh vien muon sua: ";
+	//cin.ignore();
+	fflush(stdin);
+	getline(cin, ten);
+	cout<<"-------------------------------------------"<<endl;
+	textcolor(13);
+	cout<<"Chinh sua thong tin cua hoc sinh "<<ten<<endl;
+	for(int i=0; i<SV.size(); i++){
+		//tim = 1;
+		if (SV.at(i)->getTen() == ten){
+			SV.at(i)->Nhap();
+			cout <<"\n Da chinh sua thong tin hoc sinh "<<ten<<endl;
+			cout << "\n\t\t\t\t\t\t\t -Danh Sach Sau Khi Cap Nhat La- "<<endl;
+			XuatDS();
+			break;
+		}else{
+			textcolor(4);
+			system("cls");
+			cout<<"\n\t\t\t\t\t\t Khong tim thay ma sinh vien!";
+			break;
+		}
+	}if(SV.size()==0){
+		textcolor(4);
+		system("cls");
+		cout<<"\n\t\t\t\t\t\t Danh sach rong, ko thuc hien duoc!"<<endl;
+	}
+void QuanLySinhVien::TimKiemMSSV(){
+	string ms;
+	cout<<"Nhap MSSV sinh vien can tim:";
+	fflush(stdin);
+	getline(cin,ms);	
+	cout<<endl;
+	for(int i=0;i<SV.size();i++){ 
+		STT=i;		          
+		if(ms.compare(SV.at(i)->getMSSV())==0){
+			hienThiTenCot();
+			cout<<endl<<STT<<setw(20); 
+			SV.at(i)->Xuat();
+		}	
+	}
+}
 //Ghi file
 void QuanLySinhVien::ghiFile(){
 	ofstream luufile;
@@ -268,20 +316,33 @@ void QuanLySinhVien::XoaSV(){
 
 //SapXep
 void QuanLySinhVien::SapXepD(){
-		if(SV.size()==0){
-			cout<<"Danh sach trong, khong the sap xep!!!";
-		}else{		
-		    for(int i=0;i<SV.size()-1;i++){
-                for(int j=i+1;j<SV.size();j++){
-                    if(SV.at(i)->getdtb() < SV.at(j)->getdtb()){
-                        SinhVien *t= SV.at(i);
-                        SV.at(i)=SV.at(j);
-                        SV.at(j)=t;
-                    }
+	if(SV.size()==0){
+		textcolor(12);
+		system("cls");
+		cout<<"\t\t\t\t\t\t\t Danh sach trong, khong the sap xep!!!"<<endl;
+		textcolor(11);
+		cout<<"\t\t\t\t\t\t-VUI LONG NHAP THONG TIN HOC SINH DE THUC HIEN CHUC NANG-";
+	}else{		
+		for(int i=0;i<SV.size()-1;i++){
+            for(int j=i+1;j<SV.size();j++){
+            	//kiem tra
+                if(SV.at(i)->getdtb() < SV.at(j)->getdtb()){
+                	//Bien tam
+                    SinhVien *t= SV.at(i);
+                    SV.at(i)=SV.at(j);
+                    SV.at(j)=t;
+                }
+            }
                 }
             }
     	}
             XuatDS();
+        }
+    }
+XuatDS();
+}
+
+void QuanLySinhVien::hienThiTenCot() {
 }
 
 void QuanLySinhVien::hienThiTenCot() {
@@ -338,7 +399,11 @@ void menu(){
 		cout <<"\t\t||------------------------------------------------------||"<<endl;
 		cout <<"\t\t||		6. Tim kiem sinh vien theo ten.		||"<<endl;
 		cout <<"\t\t||------------------------------------------------------||"<<endl;
-		cout <<"\t\t||		7. Ghi ket qua vao file.		||"<<endl;
+		cout <<"\t\t||		7. Chinh Sua thong tin sinh vien.	||"<<endl;
+		cout <<"\t\t||------------------------------------------------------||"<<endl;	
+		cout <<"\t\t||		8. Ghi ket qua vao file.		||"<<endl;
+		cout <<"\t\t||------------------------------------------------------||"<<endl;
+		cout <<"\t\t||		9. Tim kiem mssv.			||"<<endl;
 		cout <<"\t\t||------------------------------------------------------||"<<endl;
 		cout <<"\t\t||		0. THOAT!!				||"<<endl;
 		cout <<"\t\t=========================================================="<<endl;
